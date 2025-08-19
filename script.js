@@ -73,49 +73,40 @@ window.addEventListener('resize', function() {
 // Dados das perguntas por categoria
 const questionBank = {
     geral: [
-        "Quando foi fundada a ROTA e qual seu principal objetivo dentro da corporação?",
-        "O que significa a sigla ROTA e qual sua função dentro da hierarquia militar do RP?",
-        "Como funciona a hierarquia de patentes dentro da ROTA?",
-        "Quais são os deveres de um conscrito dentro do batalhão?",
-        "Explique a diferença entre patrulhamento preventivo e ostensivo.",
-        "Qual o procedimento correto ao prender um indivíduo com mandato ativo?",
-        "Cite 5 artigos do código penal mais utilizados em prisões dentro do RP.",
-        "Cite 3 motivos válidos para a abertura de uma ocorrência em relatório.",
-        "Como agir ao flagrar um colega de corporação cometendo anti-RP ou abuso de poder?",
-        "Cite 3 exemplos de comportamento anti-RP em ações policiais."
+        "Cite os níveis e o uso progressivo da força.",
+        "Quantas viaturas são permitidas em um acompanhamento com efetivo mínimo?",
+        "O que é insubordinação, desacato e corrupção?",
+        "Quando a ROTA foi criada e qual o contexto do termo \"ROTA\"? (nome completo por extenso).",
+        "O que é considerado uma ronda ostensiva?",
+        "Você está ciente de que, ao ingressar na ROTA, terá até 5 dias para concluir os cursos básicos e apresentar o laudo médico?"
     ],
     modulacoes: [
-        "Simule uma modulação de abordagem a um veículo suspeito em deslocamento para a favela da caixa d'água.",
-        "Simule uma modulação solicitando apoio tático em acompanhamento em área de favela.",
-        "Simule uma modulação de acompanhamento em código 3 perto ao estacionamento vermelho.",
-        "O que significa “prioridade em andamento” e como o oficial deve responder a ela?",
-        "O que é e como deve ser feito um 'QRR' corretamente?"
+        "Simule uma modulação de abordagem de Código 2 dentro do estacionamento vermelho.",
+        "Simule uma modulação de abordagem de Código 3 em um pinote no Banco Central",
+        "Simule uma modulação de acompanhamento de um R34 tripulado por dois indivíduos em uma QRU de drogas no píer.",
+        "Qual modulação deve ser feita em um acompanhamento a pé e como o indivíduo deve ser detido?"
     ],
     "codigos-q": [
-        "Cite 6 códigos “Q” utilizados na comunicação via rádio policial.",
-        "Explique o significado e quando deve ser usado o Código 3.",
-        "O que significa QAP, QSL e QTH, e como são utilizados na prática?",
-        "Quando utilizar o QRR e o QRT durante uma operação policial?",
-        "Como os códigos Q auxiliam na clareza e segurança da comunicação tática?"
+        "Cite 6 códigos Q e seus respectivos significados.",
+        "O que significa QSJ?",
+        "O que significa QSM?",
+        "O que significa QRX?",
+        "O que significa QRT?"
     ],
     "codigos-ptr": [
-        "Explique o significado do código PTR-0 e quando deve ser utilizado.",
-        "Qual a diferença entre PTR-1 e PTR-2 em relação à intensidade da ocorrência?",
-        "Quando uma patrulha deve adotar o PTR-3 e quais cuidados devem ser tomados?",
-        "O que significa PTR-4 e em qual momento ele deve ser comunicado?",
-        "Quando se utiliza o código PTR-5 e qual é a conduta esperada?",
-        "Explique o que indica o Código de Patrulha 0 e como o veículo deve operar.",
-        "Em qual situação se utiliza o Código de Patrulha 2 e como deve estar o giroflex?",
-        "Qual é o protocolo para o Código de Patrulha 3 em relação a sirenes e prioridade?",
-        "Diferencie os códigos de patrulha de prioridade alta e baixa.",
-        "Como aplicar corretamente os códigos de patrulha em uma perseguição urbana?"
+        "Quando o Código 5 pode ser liberado?",
+        "Em quais situações é feito um QTA de um acompanhamento em rede? Cite exemplos.",
+        "Quais são os códigos de modulação de 0 a 6 e em quais situações são aplicados?"
     ],
     situacoes: [
-        "Qual é o procedimento correto para uma revista pessoal padrão durante uma abordagem?",
-        "Como um oficial da ROTA deve se portar durante uma patrulha com outros agentes civis observando?",
-        "Em uma situação de confronto, qual é a conduta correta segundo os protocolos da ROTA?",
-        "Como deve ser feita a identificação de um indivíduo antes da abordagem física?",
-        "Explique como um conscrito deve se portar ao receber ordens contraditórias de superiores."
+        "Como deve ser realizada a revista em uma pessoa do sexo oposto?",
+        "Realize uma simulação de uma situação de Código 2 (Tráfico de drogas).",
+        "Realize uma simulação de uma situação de QRU de disparo de arma de fogo.",
+        "Qual seria sua reação e como agiria se, durante um pinote, sua viatura colidisse com um civil e este viesse a desmaiar?",
+        "Qual seria sua reação e como agiria se um superior hierárquico lhe desse uma ordem controversa?",
+        "Na capital, o que ocorre quando um indivíduo em um pinote lança o veículo em direção ao mar permanecendo dentro dele?",
+        "Qual seria seu comportamento e sua ação ao presenciar um indivíduo proferindo palavras de baixo calão enquanto seu radar acusa QRUs de drogas e disparos de arma de fogo?",
+        "Qual seria sua reação ao ser abordado por um veículo blindado com quatro indivíduos fortemente armados, estando você acompanhado apenas de um parceiro de farda?"
     ]
 };
 
