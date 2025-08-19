@@ -4,9 +4,7 @@
   "description": "Sistema de provas para ROTA GTA RP",
   "main": "index.html",
   "scripts": {
-    "dev": "vercel dev",
-    "build": "vercel build",
-    "deploy": "vercel --prod"
+    "dev": "vercel dev"
   },
   "dependencies": {
     "@vercel/blob": "^0.23.0"
