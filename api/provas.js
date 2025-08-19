@@ -1,18 +1,26 @@
-import { NextResponse } from 'next/server';
-
 // Função para obter todas as provas
 export async function GET() {
   try {
     console.log('Teste GET - API funcionando');
     
     // Retornar array vazio por enquanto para testar
-    return NextResponse.json([]);
+    return new Response(JSON.stringify([]), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
   } catch (error) {
     console.error('Erro no GET:', error);
-    return NextResponse.json({ 
+    return new Response(JSON.stringify({ 
       error: 'Erro interno do servidor',
       details: error.message 
-    }, { status: 500 });
+    }), {
+      status: 500,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
   }
 }
 
@@ -25,17 +33,27 @@ export async function POST(request) {
     console.log('Dados recebidos:', prova.id);
     
     // Retornar sucesso simulado
-    return NextResponse.json({ 
+    return new Response(JSON.stringify({ 
       success: true, 
       message: 'Prova salva com sucesso (teste)',
       id: prova.id
+    }), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+      },
     });
   } catch (error) {
     console.error('Erro no POST:', error);
-    return NextResponse.json({ 
+    return new Response(JSON.stringify({ 
       error: 'Erro interno do servidor',
       details: error.message 
-    }, { status: 500 });
+    }), {
+      status: 500,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
   }
 }
 
@@ -44,19 +62,29 @@ export async function DELETE(request) {
   try {
     console.log('Teste DELETE - API funcionando');
     
-    const { searchParams } = new URL(request.url);
-    const provaId = searchParams.get('id');
+    const url = new URL(request.url);
+    const provaId = url.searchParams.get('id');
     
-    return NextResponse.json({ 
+    return new Response(JSON.stringify({ 
       success: true, 
       message: 'Prova deletada com sucesso (teste)',
       id: provaId
+    }), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+      },
     });
   } catch (error) {
     console.error('Erro no DELETE:', error);
-    return NextResponse.json({ 
+    return new Response(JSON.stringify({ 
       error: 'Erro interno do servidor',
       details: error.message 
-    }, { status: 500 });
+    }), {
+      status: 500,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
   }
 }
