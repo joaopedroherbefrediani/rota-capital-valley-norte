@@ -30,11 +30,18 @@ body {
     font-weight: bold;
 }
 
-.logo img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+
+.logo {
+    text-align: center;
     margin-bottom: 50px;
+}
+
+.logo img{
+    width: 50%;
+    height: 50%;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
 }
 
 .menu-section {
@@ -1235,11 +1242,34 @@ body.login-mode {
     
     .header {
         margin-bottom: 20px;
+        position: relative;
     }
     
     .header h1 {
         font-size: 20px;
         text-align: center;
+    }
+    
+    .connection-status {
+        position: static;
+        margin: 0 0 20px 0;
+        justify-content: center;
+        width: 100%;
+        order: 1;
+    }
+    
+    .header h1 {
+        font-size: 20px;
+        text-align: center;
+        order: 0;
+        margin-bottom: 15px;
+    }
+    
+    .header {
+        margin-bottom: 20px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
     }
     
     .conscript-name-section {
