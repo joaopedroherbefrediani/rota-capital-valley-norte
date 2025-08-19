@@ -659,6 +659,7 @@ function updateProvasList() {
     const provasAvaliadas = provas.filter(p => p.evaluation).length;
     const aprovados = provas.filter(p => p.evaluation && p.evaluation.isApproved).length;
     const reprovados = provas.filter(p => p.evaluation && !p.evaluation.isApproved).length;
+    const pendentes = provas.filter(p => !p.evaluation).length;
     
     // Atualizar contador no header
     const header = document.querySelector('#provasScreen .header h1');
@@ -679,6 +680,10 @@ function updateProvasList() {
             <div class="stat-item">
                 <span class="stat-number">${provasAvaliadas}</span>
                 <span class="stat-label">Avaliadas</span>
+            </div>
+            <div class="stat-item pending">
+                <span class="stat-number">${pendentes}</span>
+                <span class="stat-label">Pendentes</span>
             </div>
             <div class="stat-item approved">
                 <span class="stat-number">${aprovados}</span>
@@ -703,6 +708,10 @@ function updateProvasList() {
             <div class="stat-item">
                 <span class="stat-number">${provasAvaliadas}</span>
                 <span class="stat-label">Avaliadas</span>
+            </div>
+            <div class="stat-item pending">
+                <span class="stat-number">${pendentes}</span>
+                <span class="stat-label">Pendentes</span>
             </div>
             <div class="stat-item approved">
                 <span class="stat-number">${aprovados}</span>

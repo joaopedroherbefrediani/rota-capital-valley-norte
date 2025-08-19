@@ -461,6 +461,11 @@ body {
     border-color: #f5c6cb;
 }
 
+.stat-item.pending {
+    background-color: #fff3cd;
+    border-color: #ffeaa7;
+}
+
 .stat-number {
     display: block;
     font-size: 28px;
@@ -475,6 +480,10 @@ body {
 
 .stat-item.rejected .stat-number {
     color: #721c24;
+}
+
+.stat-item.pending .stat-number {
+    color: #856404;
 }
 
 .stat-label {
