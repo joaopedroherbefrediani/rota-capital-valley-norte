@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROTA - Gerador de Provas</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <img src="./imgs/logo-rota.svg" alt="logo rota">
+                <!-- <h2>G GOODFOOD</h2> -->
+            </div>
+            
+            <div class="menu-section">
+                <h3>MENU</h3>
+                <ul class="menu-items">
+                    <li class="active" onclick="showGenerateQuestions()">
+                        <i class="fas fa-file-alt"></i>
+                        <span>GERAR PERGUNTAS</span>
+                    </li>
+                    <li onclick="showProvas()">
+                        <i class="fas fa-clipboard-list"></i>
+                        <span>PROVAS</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="menu-section">
+                <h3>OUTROS</h3>
+                <ul class="menu-items">
+                    <li onclick="handleLogout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>SAIR</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Login Screen -->
+        <div id="loginScreen" class="screen active">
+            <div class="login-container">
+                <div class="login-card">
+                    <div class="login-header">
+                        <img src="./imgs/logo-rota.svg" alt="logo rota" class="login-logo">
+                        <h1>Sistema de Recrutamento</h1>
+                        <p>Faça login para acessar o sistema</p>
+                    </div>
+                    
+                    <form class="login-form" id="loginForm">
+                        <div class="form-group">
+                            <label for="username">Usuário</label>
+                            <input type="text" id="username" name="username" required placeholder="Digite seu usuário">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="password">Senha</label>
+                            <div class="password-input-container">
+                                <input type="password" id="password" name="password" required placeholder="Digite sua senha">
+                                <button type="button" class="password-toggle-btn" onclick="togglePassword()">
+                                    <i class="fas fa-eye" id="passwordIcon"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="login-btn">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Entrar
+                        </button>
+                    </form>
+                    
+                    <div class="login-footer">
+                        <p>Esse sistema é apenas para GTA RP, não é um sistema oficial da ROTA.</p><br>
+                        <p>Feito por Fredi Baixada ❤️</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Generate Questions Screen -->
+            <div id="generateQuestionsScreen" class="screen">
+                <div class="header">
+                    <h1>PERGUNTAS PARA RECRUTAMENTO</h1>
+                </div>
+
+                <!-- Nome do Conscrito e Instrutor -->
+                <div class="conscript-name-section">
+                    <div class="name-inputs">
+                        <div class="name-input-group">
+                            <label for="conscriptName">Nome do Conscrito:</label>
+                            <input type="text" id="conscriptName" placeholder="Digite o nome do conscrito" class="conscript-name-input">
+                        </div>
+                        <div class="name-input-group">
+                            <label for="instructorName">Nome do Instrutor:</label>
+                            <input type="text" id="instructorName" placeholder="Digite o nome do instrutor" class="conscript-name-input">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-wrapper">
+                    <!-- Left Section - Selected Questions -->
+                    <div class="left-section">
+                        <h3>Questões Selecionadas</h3>
+                        <div class="selected-questions" id="selectedQuestions">
+                            <!-- Selected questions will be added here -->
+                        </div>
+                        <!-- Generate Buttons Section -->
+                        <div class="generate-buttons-section">
+                            <button class="generate-btn" onclick="generateRandomQuestions()">
+                                GERAR PERGUNTAS ALEATÓRIAS
+                            </button>
+                            <button class="generate-test-btn" onclick="generateTest()">
+                                GERAR PROVA
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right Section - Question Bank -->
+                    <div class="right-section">
+                        <h3>Selecione perguntas manualmente</h3>
+                        <div class="question-bank">
+                            <div class="tabs">
+                                <button class="tab-btn active" data-tab="geral">Geral</button>
+                                <button class="tab-btn" data-tab="modulacoes">Modulações</button>
+                                <button class="tab-btn" data-tab="codigos-q">Códigos Q</button>
+                                <button class="tab-btn" data-tab="codigos-ptr">Códigos de PTR</button>
+                                <button class="tab-btn" data-tab="situacoes">Situações</button>
+                            </div>
+
+                            <div class="questions-list" id="questionsList">
+                                <!-- Questions will be populated by JavaScript -->
+                            </div>
+
+                            <button class="clear-btn" onclick="clearSelection()">
+                                LIMPAR SELEÇÃO
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Provas Screen -->
+            <div id="provasScreen" class="screen">
+                <div class="header">
+                    <h1>PROVAS GERADAS</h1>
+                </div>
+
+                <div class="provas-content">
+                    <div class="provas-list" id="provasList">
+                        <!-- Provas will be populated by JavaScript -->
+                    </div>
+                    <div class="provas-footer">
+                        <button class="sync-btn" onclick="loadProvasFromServer()" title="Sincronizar provas">
+                            <i class="fas fa-sync-alt"></i> Sincronizar
+                        </button>
+                        <button class="download-spreadsheet-btn" onclick="downloadSpreadsheet()">
+                            <i class="fas fa-download"></i> Baixar planilha
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Prova Detail Screen -->
+            <div id="provaDetailScreen" class="screen">
+                <div class="header">
+                    <h1 id="provaDetailTitle">DETALHES DA PROVA</h1>
+                    <button class="back-btn" onclick="showProvas()">
+                        <i class="fas fa-arrow-left"></i> Voltar
+                    </button>
+                </div>
+
+                <div class="prova-detail-content" id="provaDetailContent">
+                    <!-- Prova content will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation for Mobile -->
+        <div class="bottom-nav">
+            <div class="bottom-nav-item active" onclick="showGenerateQuestions()">
+                <i class="fas fa-file-alt"></i>
+                <span>Gerar</span>
+            </div>
+            <div class="bottom-nav-item" onclick="showProvas()">
+                <i class="fas fa-clipboard-list"></i>
+                <span>Provas</span>
+            </div>
+            <div class="bottom-nav-item" onclick="handleLogout()">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Sair</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
