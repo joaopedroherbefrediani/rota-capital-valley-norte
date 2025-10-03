@@ -27,6 +27,10 @@
                         <i class="fas fa-clipboard-list"></i>
                         <span>PROVAS</span>
                     </li>
+                    <li onclick="showCertificates()">
+                        <i class="fas fa-award"></i>
+                        <span>CERTIFICADOS</span>
+                    </li>
                 </ul>
             </div>
             
@@ -179,6 +183,44 @@
                     <!-- Prova content will be populated by JavaScript -->
                 </div>
             </div>
+
+            <!-- Certificates Screen -->
+            <div id="certificatesScreen" class="screen">
+                <div class="header">
+                    <h1>GERAR CERTIFICADO</h1>
+                </div>
+                <div class="cert-container">
+                    <div class="cert-form">
+                        <div class="form-row">
+                            <label for="certificateType">Tipo de certificado</label>
+                            <select id="certificateType" class="cert-input">
+                                <option value="guarita">Certificado Guarita</option>
+                                <option value="rocam">Certificado ROCAM</option>
+                                <option value="piloto_e_atirador">Certificado Piloto e Atirador</option>
+                                <option value="paraquedista_e_mergulhador">Certificado Paraquedista e Mergulhador</option>
+                                <option value="campo">Certificado CAMPO</option>
+                                <option value="rondas_ostensivas">Certificado Rondas Ostensivas</option>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <label for="officerName">Nome do oficial</label>
+                            <input id="officerName" type="text" class="cert-input" placeholder="Digite o nome para o certificado">
+                        </div>
+                        <div class="actions">
+                            <button class="generate-cert-btn" onclick="generateCertificate()">
+                                <i class="fas fa-magic"></i> Gerar certificado
+                            </button>
+                            <button id="downloadCertBtn" class="download-cert-btn" onclick="downloadCertificate()" disabled>
+                                <i class="fas fa-download"></i> Baixar certificado
+                            </button>
+                        </div>
+                    </div>
+                    <div class="cert-preview">
+                        <canvas id="certificateCanvas"></canvas>
+                        <p class="cert-hint">A pré-visualização aparecerá aqui após gerar.</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Bottom Navigation for Mobile -->
@@ -190,6 +232,10 @@
             <div class="bottom-nav-item" onclick="showProvas()">
                 <i class="fas fa-clipboard-list"></i>
                 <span>Provas</span>
+            </div>
+            <div class="bottom-nav-item" onclick="showCertificates()">
+                <i class="fas fa-award"></i>
+                <span>Certificados</span>
             </div>
             <div class="bottom-nav-item" onclick="handleLogout()">
                 <i class="fas fa-sign-out-alt"></i>

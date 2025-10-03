@@ -31,8 +31,13 @@ function updateNavigationActive(screen) {
         if (sidebarItem) sidebarItem.classList.add('active');
         if (bottomNavItem) bottomNavItem.classList.add('active');
     } else if (screen === 'provas') {
-        const sidebarItem = document.querySelector('.sidebar .menu-items li:nth-child(2)');
-        const bottomNavItem = document.querySelector('.bottom-nav-item:nth-child(2)');
+        const sidebarItem = document.querySelector('.sidebar .menu-items li:nth-child(3)');
+        const bottomNavItem = document.querySelector('.bottom-nav-item:nth-child(3)');
+        if (sidebarItem) sidebarItem.classList.add('active');
+        if (bottomNavItem) bottomNavItem.classList.add('active');
+    } else if (screen === 'certificates') {
+        const sidebarItem = document.querySelector('.sidebar .menu-items li:nth-child(4)');
+        const bottomNavItem = document.querySelector('.bottom-nav-item:nth-child(4)');
         if (sidebarItem) sidebarItem.classList.add('active');
         if (bottomNavItem) bottomNavItem.classList.add('active');
     }
@@ -617,6 +622,19 @@ function showGenerateQuestions() {
     updateNavigationActive('generateQuestions');
 }
 
+// Navegar para certificados
+function showCertificates() {
+    if (!isLoggedIn) {
+        showNotification('Faça login para acessar o sistema!', 'error');
+        return;
+    }
+    hideAllScreens();
+    const el = document.getElementById('certificatesScreen');
+    if (el) el.classList.add('active');
+    currentScreen = 'certificates';
+    updateNavigationActive('certificates');
+}
+
 async function showProvas() {
     if (!isLoggedIn) {
         showNotification('Faça login para acessar o sistema!', 'error');
@@ -1143,6 +1161,120 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+// ===== Certificados =====
+let certificateImage = null;
+let lastGeneratedDataUrl = null;
+
+async function loadCertificateTemplate(type) {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    const typeToBase = {
+        guarita: 'certificados/certificado_guarita_template',
+        rocam: 'certificados/certificado_rocam_template',
+        piloto_e_atirador: 'certificados/certificado_piloto_e_atirador_template',
+        paraquedista_e_mergulhador: 'certificados/certificado_paraquedista_e_mergulhador_template',
+        campo: 'certificados/certificado_campo_template',
+        rondas_ostensivas: 'certificados/certificado_rondas_ostensivas_template'
+    };
+    const basePath = typeToBase[type] || typeToBase.guarita;
+    const candidates = [
+        basePath + '.png',
+        basePath + '.jpg',
+        basePath + '.jpeg',
+        basePath
+    ];
+    for (let i = 0; i < candidates.length; i++) {
+        try {
+            await new Promise((resolve, reject) => {
+                img.onload = resolve;
+                img.onerror = reject;
+                img.src = candidates[i] + `?v=${Date.now()}`;
+            });
+            return img;
+        } catch (e) {
+            // try next extension
+        }
+    }
+    throw new Error('Template não encontrado em certificados/');
+}
+
+async function generateCertificate() {
+    const name = (document.getElementById('officerName')?.value || '').trim();
+    if (!name) {
+        showNotification('Digite o nome do oficial!', 'error');
+        return;
+    }
+
+    try {
+        const type = document.getElementById('certificateType')?.value || 'guarita';
+        // Sempre recarrega ao trocar tipo para evitar cache indevido
+        certificateImage = await loadCertificateTemplate(type);
+        const canvas = document.getElementById('certificateCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Ajustar canvas ao tamanho da imagem
+        canvas.width = certificateImage.naturalWidth;
+        canvas.height = certificateImage.naturalHeight;
+
+        // Desenhar template
+        ctx.drawImage(certificateImage, 0, 0, canvas.width, canvas.height);
+
+        // Calcular posição aproximada baseada na imagem fornecida
+        // Nome centralizado e ~8px acima da linha horizontal
+        const centerX = canvas.width / 2;
+        let nameY = Math.round(canvas.height * 0.415) - 2; // desci 6px (antes era -8)
+
+        // Definir tipografia semelhante
+        // Tentar ajustar tamanho para caber
+        const maxWidth = Math.round(canvas.width * 0.7);
+        let fontSize = Math.round(canvas.height * 0.07); // base
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillStyle = '#e6e6e6';
+        ctx.strokeStyle = 'rgba(0,0,0,0.25)';
+        ctx.lineWidth = Math.max(2, Math.round(canvas.height * 0.002));
+
+        // Ajustar tamanho para caber em maxWidth
+        do {
+            ctx.font = `bold ${fontSize}px Montserrat, Arial, Helvetica, sans-serif`;
+            if (ctx.measureText(name).width <= maxWidth) break;
+            fontSize -= 2;
+        } while (fontSize > 10);
+
+        // Desenhar contorno sutil + preenchimento
+        ctx.strokeText(name.toUpperCase(), centerX, nameY);
+        ctx.fillText(name.toUpperCase(), centerX, nameY);
+
+        // Exibir
+        canvas.style.display = 'block';
+        const hint = document.querySelector('.cert-preview .cert-hint');
+        if (hint) hint.style.display = 'none';
+
+        // Habilitar download
+        lastGeneratedDataUrl = canvas.toDataURL('image/png');
+        const btn = document.getElementById('downloadCertBtn');
+        if (btn) btn.disabled = false;
+        showNotification('Certificado gerado!', 'success');
+    } catch (err) {
+        console.error(err);
+        showNotification('Não foi possível carregar o template. Verifique a pasta certificados.', 'error');
+    }
+}
+
+function downloadCertificate() {
+    if (!lastGeneratedDataUrl) {
+        showNotification('Gere o certificado primeiro.', 'error');
+        return;
+    }
+    const link = document.createElement('a');
+    const name = (document.getElementById('officerName')?.value || 'certificado').trim();
+    link.href = lastGeneratedDataUrl;
+    link.download = `certificado_${name.replace(/\s+/g,'_')}.png`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
 
 // Função para baixar planilha com todos os resultados
 function downloadSpreadsheet() {
